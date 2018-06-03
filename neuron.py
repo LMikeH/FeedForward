@@ -1,18 +1,18 @@
-import numpy as numpy
-from enum import enum
+import numpy as np
+from enum import Enum
 import random
 
 class neurotype(Enum):
-    inp = "inp"
+    inp = 'inp'
     hidden = 'hidden'
     output = 'output'
 
 class connection():
-    def __init__(self,parent_neuron,child_neuron,active=True):
+    def __init__(self,parent_neuron,child_neuron,b=.01,active=True):
         self.parent_neuron = parent_neuron
         self.child_neuron = child_neuron
         self.w = random.random()
-        self.b = .2
+        self.b = b
         self.active = active
 
         if self.active == False:
@@ -29,11 +29,13 @@ class neuron():
         newcon = connection(self,child)
         child.parent_connections.append(newcon)
         self.child_connections.append(newcon)
+        return newcon
 
     def addParent(self,parent):
         newcon = connection(parent,self)
         parent.child_connections.append(newcon)
         self.parent_connections.append(newcon)
+        return newcon
 
     def activate(self):
         if self.neurotype == neurotype.inp:
