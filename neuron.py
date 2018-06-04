@@ -8,7 +8,7 @@ class neurotype(Enum):
     output = 'output'
 
 class connection():
-    def __init__(self,parent_neuron,child_neuron,b=.01,active=True):
+    def __init__(self,parent_neuron,child_neuron,b=0,active=True):
         self.parent_neuron = parent_neuron
         self.child_neuron = child_neuron
         self.w = random.random()

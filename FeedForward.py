@@ -22,14 +22,16 @@ class feedForward():
             for i in self.inlayer:
                 self.connection_list.append(o.addParent(i))
 
-    def activate(self):
+    def activate(self, inputs):
+        for inp in range(len(inputs)):
+            self.inlayer[inp].input = inputs[inp]
+
         out = []
         for o in self.outlayer:
             out.append(o.activate())
         return out
 
 
-ins = np.random.rand(10)
+ins = 2*np.random.rand(10) - 1
 nn = feedForward(10,10)
-
-print(nn.activate())
+print(nn.activate(ins))
