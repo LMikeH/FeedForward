@@ -51,32 +51,79 @@ class feedForward():
         self.hidden.append(neuron)
 
     def addConnection(self):
-        neuron1 = random.choice()
-        neuron2 = ramdom.choice()
-        newcon = nr.connection(neuron1, neuron2)
-        neuron1.child_connections.append(newcon)
-        neuron2.parent_connections.append(newcon)
-        self.connection_list.append(newcon)
+        success = False
+        canidateset1 = self.inlayer + self.outlayer + self.hidden
+        canidateset2 = self.outlayer + self.hidden
+        while success == False:
+            n1 = random.choice(canidateset1)
+            n2 = random.choice(canidateset2)
 
-ins = 2*np.random.rand(10) - 1
-nn = feedForward(10,10)
-print(ins)
-print(nn.activate(ins))
+            connected = False
+            for p in n1.parent_connections:
+                if n2 == p.parent_neuron:
+                    connected == True
+            for c in n1.child_connections:
+                if n2 == c.child_neuron:
+                    connected == True
 
-print(len(nn.hidden))
-print(len(nn.connection_list))
-nn.addNeuron()
-print(len(nn.hidden))
-print(len(nn.connection_list))
+            if connected == False:
+                if n1.checkAncestors(0) > n2.checkAncestors(0):
+                    self.connection_list.append(n1.addParent(n2))
+                    success = True
+                elif n1.checkAncestors(0) < n2.checkAncestors(0):
+                    self.connection_list.append(n1.addChild(n2))
+                    success = True
 
-neuron1 = nn.inlayer[0]
-neuron2 = nn.hidden[0]
-nn.addConnection()
-print(len(nn.connection_list))
-neuron3 = nn.hidden[0]
-neuron4 = nn.outlayer[3]
-nn.addConnection()
-print(len(nn.connection_list))
-print(nn.activate(ins))
+    def changeWeight(self):
+        conn = random.choice(self.connection_list)
+        conn.w = random.random()
+            
 
-nn.addNeuron()
+# ins = 2*np.random.rand(10) - 1
+# nn = feedForward(10,10)
+# print(nn.activate(ins))
+# nn.addNeuron()
+# nn.addNeuron()
+# nn.addNeuron()
+# nn.addNeuron()
+# nn.addNeuron()
+# nn.addConnection()
+# nn.addConnection()
+# nn.addConnection()
+# nn.addConnection()
+# nn.addNeuron()
+# nn.addNeuron()
+# nn.addNeuron()
+# nn.addNeuron()
+# nn.addNeuron()
+# nn.addConnection()
+# nn.addConnection()
+# nn.addConnection()
+# nn.addConnection()
+# nn.addNeuron()
+# nn.addNeuron()
+# nn.addNeuron()
+# nn.addNeuron()
+# nn.addNeuron()
+# nn.addConnection()
+# nn.addConnection()
+# nn.addConnection()
+# nn.addConnection()
+# print(nn.activate(ins))
+# nn.changeWeight()
+# nn.changeWeight()
+# nn.changeWeight()
+# nn.changeWeight()
+# nn.changeWeight()
+# nn.changeWeight()
+# nn.changeWeight()
+# nn.changeWeight()
+# nn.changeWeight()
+# nn.changeWeight()
+# nn.changeWeight()
+# nn.changeWeight()
+# nn.changeWeight()
+# nn.changeWeight()
+# nn.changeWeight()
+# print(nn.activate(ins))
+

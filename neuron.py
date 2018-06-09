@@ -46,4 +46,14 @@ class neuron():
                 out += i.w*i.parent_neuron.activate() - i.b
             return np.tanh(out)
 
-    
+    def checkAncestors(self,cnt):
+        if self.neurotype == neurotype.inp:
+            cnt += 1
+            return cnt
+        else:
+            out = []
+            for p in self.parent_connections:
+                out.append(p.parent_neuron.checkAncestors(cnt))
+                cnt += min(out)
+            return cnt
+
